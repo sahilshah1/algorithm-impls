@@ -27,10 +27,12 @@ def decode_helper(original_code, decoded, total_strings=set()):
         return 1
 
     count = 0
-    if len(original_code) >= 1:
-        first_letter = original_code[0]
-        count += decode_helper(original_code[1:], decoded + int_to_char(first_letter), total_strings)
 
+    # decode first letter and add to count. recurse on string - letter
+    first_letter = original_code[0]
+    count += decode_helper(original_code[1:], decoded + int_to_char(first_letter), total_strings)
+
+    # decode first two letters if possible and add to count. recurse on string - first 2 letters
     if len(original_code) >= 2:
         first_two_letters = original_code[0:2]
         if (int(first_two_letters)) <= 26:

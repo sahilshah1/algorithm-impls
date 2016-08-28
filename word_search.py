@@ -80,7 +80,7 @@ def is_position_valid(row, col, board, visited):
 def build_trie(words):
     trie = {}
     for word in words:
-        add_word(0, trie)
+        add_word(0, word, trie)
 
     return trie
 

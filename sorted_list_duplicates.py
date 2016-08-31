@@ -12,34 +12,23 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        new_list = []
-
-        prev_val = None
+        prev = dummy = ListNode(0)
+        dummy.next = head
         current = head
-        after = head.next if head else None
 
-        while current:
-            prev_val = prev_val & 0xffffffff if prev_val is not None else None
-            current_val = current.val & 0xffffffff
-            after_val = after.val & 0xffffffff if after else None
+        while current and current.next:
 
-            is_current_strictly_increasing = (current == head or prev_val < current_val) and\
-                                             (not after or current_val < after_val)
+            if current.val == current.next.val:
+                while current.next and current.val == current.next.val:
+                    current = current.next
 
-            is_current_strictly_decreasing = (current == head or prev_val > current_val) and\
-                                             (not after or current_val > after_val)
+                prev.next = current.next
+                current = current.next
+            else:
+                prev = prev.next
+                current = current.next
 
-            if is_current_strictly_increasing or is_current_strictly_decreasing:
-                new_list.append(ListNode(current.val))
-
-            prev_val = current.val
-            current = after
-            after = after.next if after else None
-
-        for i in xrange(0, len(new_list) - 1):
-            new_list[i].next = new_list[i + 1]
-
-        return new_list[0] if new_list else None
+        return dummy.next
 
 
 class ListNode(object):
